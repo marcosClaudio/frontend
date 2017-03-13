@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     injector : {
       task : {
         files : {
-          'index.html': ['assets/js/*.js', 'assets/css/*.css']
+          'index.html': ['assets/js/*.js', 'assets/css/*.css', 'scripts/**/*.js']
         }
       }
     },

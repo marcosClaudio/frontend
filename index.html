@@ -11,6 +11,8 @@
     <!-- bower:js -->
     <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
 
     
@@ -19,14 +21,10 @@
     <!-- endinjector -->
     <!-- injector:js -->
     <script src="/assets/js/main.js"></script>
+    <script src="/scripts/app/app.js"></script>
     <!-- endinjector -->
 </head>
-<body>
-    <div class="vermelho">
-        <h1>Treinamento Front</h1>
-    </div>
-    <div class="amarelo">
-        <h1>Treinamento End</h1>
-    </div>
+<body ng-app="treinamento" ng-strict-di>
+
 </body>
 </html>
