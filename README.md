@@ -19,7 +19,18 @@ Para fazer o merge de uma branch
 $ git merge grunt(branch)
 ```  
 
+Armazenando credenciais do github (uma semana)
+```
+$ git config --global credential.helper 'cache --timeout=604800'
+```
+
 ## Grunt
+
+Instalando o Grunt
+```
+$ sudo npm install -g grunt-cli
+```
+
 Automatizador de tasks
 
 Utilizaremos para os seguintes fins:
@@ -70,3 +81,28 @@ Modulo para monitorar mudancas no projeto e executar tasks pre-definidas.
 npm install grunt-http-server --save-dev
 ```
 Modulo para disponibilizar um servidor local para o projeto.
+
+## Bower
+
+Instalando o Bower
+```
+$ sudo npm install -g bower
+```
+
+Gerenciador de dependencias de insumos para web. 
+
+
+* Javascripts
+* Css
+* Icones
+* Fontes
+
+Para gerar o bower.json:
+```
+bower init
+```
+
+Para incluir dependencias para o projeto
+```
+bower install jquery --save
+```

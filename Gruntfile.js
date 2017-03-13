@@ -19,7 +19,7 @@ module.exports = function(grunt) {
       }
     },
     injector : {
-      dev : {
+      task : {
         files : {
           'index.html': ['assets/js/*.js', 'assets/css/*.css']
         }
@@ -28,7 +28,16 @@ module.exports = function(grunt) {
     watch : {
       inject : {
         files :  ['assets/js/*.js', 'assets/css/*.css'],
-        tasks : ['injector:dev']
+        tasks : ['injector:task']
+      },
+      bower : {
+        files : ['bower.json'],
+        tasks : ['wiredep:task' ]
+      }
+    },
+    wiredep : {
+      task : {
+        src : ['index.html']
       }
     }
 
@@ -37,6 +46,7 @@ module.exports = function(grunt) {
   // Default task(s).
   grunt.registerTask('default', [
     'injector',
+    'wiredep:task',
     'http-server',
     'watch'
     ]);
