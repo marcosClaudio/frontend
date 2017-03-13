@@ -6,6 +6,8 @@ $ git checkout -b grunt
 Comitando branch grunt
 $ git push -u origin branch
 ```
+Para ignorar arquivos ou diretorios utilizamos o arquivo .gitignore, onde adicionamos os insumos nao versionaveis.
+
 
 ## Grunt
 Automatizador de tasks
@@ -35,3 +37,26 @@ grunt
 ou
 grunt default
 ```
+### Grunt injector
+```
+npm install grunt-injector --save-dev
+```
+Modulo para injecao de arquivos especificos no index.html.
+
+### Grunt Wiredep
+```
+npm install grunt-wiredep --save-dev
+```
+Modulo para injecao de dependencias do projeto.
+
+### Grunt Watch
+```
+npm install grunt-contrib-watch --save-dev
+```
+Modulo para monitorar mudancas no projeto e executar tasks pre-definidas.
+
+### Grunt HTTP Server
+```
+npm install grunt-http-server --save-dev
+```
+Modulo para disponibilizar um servidor local para o projeto.
