@@ -6,8 +6,18 @@ $ git checkout -b grunt
 Comitando branch grunt
 $ git push -u origin branch
 ```
+
 Para ignorar arquivos ou diretorios utilizamos o arquivo .gitignore, onde adicionamos os insumos nao versionaveis.
 
+Para voltar para o master do github:
+```
+$ git checkout master
+```
+
+Para fazer o merge de uma branch
+```
+$ git merge grunt(branch)
+```  
 
 ## Grunt
 Automatizador de tasks
