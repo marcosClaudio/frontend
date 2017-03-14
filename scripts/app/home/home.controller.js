@@ -6,8 +6,8 @@ angular.module('treinamento') //usando o modulo treinamento
 
     HomeController.$inject = ['$scope'];
 
-function HomeController($scope) {
-       
-}
+    function HomeController($scope) {
+        $scope.title = "Home";
+    }
 
 })();

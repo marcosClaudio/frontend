@@ -6,8 +6,8 @@ angular.module('treinamento') //usando o modulo treinamento
 
     EmpresaController.$inject = ['$scope'];
 
-function EmpresaController($scope) {
-       
-}
+    function EmpresaController($scope) {
+        $scope.title = "Empresa";
+    }
 
 })();

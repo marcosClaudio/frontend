@@ -209,3 +209,65 @@ Vamos adotar um padrão para desenvolvimento onde toda as rotas/states da aplica
 
 ```
 Todos os states são declarados através do *provider* ```$stateProvider```, ele tem a função de indicar ao ui-router que há uma rota a ser respeitada dentro da aplicação.
+
+#### Trabalhando states com Views e Controllers
+Identificamos uma view root da aplicação para onde os states serão renderidados, esta view necessáriamente precisa ser declarada no index.html:
+```html
+<!DOCTYPE html>
+<html lang="en">
+...
+<body ng-app="treinamento" ng-strict-di>
+    <div ui-view="content"></div>
+</body>
+</html>
+```
+
+Após esta declaração, podemos utilizar os states indicando a view root para onde serão renderizados os HTMLs de cada state.
+Para declarar um state vamos utilizar o padrão:
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .config(stateConfig);
+
+    stateConfig.$inject = ['$stateProvider'];
+
+    function stateConfig($stateProvider){
+        $stateProvider.state('app.home', {
+            parent : 'app', // nome do pai do state
+            url : '/home', // url que será acessado ex.: http://localhost/#!/home
+            views : { 
+                'content@' : {
+                    templateUrl : 'caminho_relativo_do_html_do_state.html',
+                    controller : 'MyStateController'
+                }
+            }
+        });
+    }
+})();
+```
+Como podemos notar, o nome do state respeita a hierarquia que definimos, como o state ```home``` é filho do state abstrato ```app```, seu nome fica: ```app.home```. 
+
+Utilizamos o nome ```content@``` para definir que a view que será utilizada é a view *content* root do documento, criada no index.html. o ```@``` indica que é o caminho absoluto da view.
+
+O HTML do state:
+```html
+    <h1>Olá, seu sou um state {{ adjetivo }}</h1>
+```
+
+O controller do state:
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .controller(MyStateController);
+
+    MyStateController.$inject = ['$scope'];
+
+    function MyStateController($scope){
+        $scope.adjetivo = 'lindão';
+    }
+})();
+```
