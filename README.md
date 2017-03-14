@@ -253,7 +253,7 @@ Utilizamos o nome ```content@``` para definir que a view que será utilizada é 
 
 O HTML do state:
 ```html
-    <h1>Olá, seu sou um state {{ adjetivo }}</h1>
+<h1>Olá, seu sou um state {{ adjetivo }}</h1>
 ```
 
 O controller do state:
@@ -270,4 +270,168 @@ O controller do state:
         $scope.adjetivo = 'lindão';
     }
 })();
+```
+
+### Angular $resource
+É um módulo client REST para o AngularJS. O Angular $resource, nos fornece todos os métodos HTTP para uma requisição REST. São eles:
+
+* GET (com ID)
+  * no $resource: ```service.get```
+* GET (is array)
+  * no $resource: ```service.query```  
+* POST
+  * no $resource: ```service.save```
+* PUT
+  * é necessária uma implementação do método
+* DELETE
+  * no $resource: ```service.delete``` ou ```service.remove```
+
+Como ficaria a implementação de um serviço na aplicação?
+
+Primeiro devemos instalar como depenência e incluir o módulo $resource em nosso módulo de aplicação:
+```sh
+$ bower install angular-resource --save
+```
+
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento', [
+        'ui.router',
+        'ngResource'
+    ]);
+})();
+```
+
+Vamos utilizar *JSONPlaceholder* para a efetuar testes com o módulo $resource.
+Para declaração do serviço, utilizaremos o padrão:
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .factory('PostsService', PostsService);
+    
+    PostsService.$inject = ['$resource'];
+
+    function PostsService($resource){
+        var service = $resource('https://jsonplaceholder.typicode.com/posts/:id', {id: '@id'}, {
+            put : {
+                method : 'PUT'
+            }
+        });
+
+        return service;
+    }
+})();
+```
+
+Onde podemos analizar o método ```$resource(url, parametros, implementação)```, onde:
+* url: é a url, parametrizada ou não, para qual o resource efetuará as chamadas
+* parametros: caso a url tenha parametros, deverão ser listados neste objeto
+* implementação: podemos sobreescrever os métodos originais do ```$resource``` ou imeplementar novos, como no caso do PUT
+
+#### Utilizando o $resource
+##### Implementação 1: Controller
+Implementaremos primeiramente no controller, implementação esta que independente do tempo que o ```$resource``` levará para entregar a resposta, o state e por sua vez a view será entregue primeiro.
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .controller('HomeController', HomeController);
+
+    HomeController.$inject = ['$scope', 'PostsService'];
+
+    function HomeController($scope, PostsService){
+        
+        $scope.posts = [];
+
+        PostsService.query().$promise.then(fnSuccess, fnError);
+
+        function fnSuccess(data){
+            $scope.posts = data;
+        }
+
+        function fnError(){
+
+        }
+
+    }
+})();
+```
+
+```html
+<h1>Oi seu sou a HOME</h1>
+<ul>
+    <li ng-repeat="post in posts">{{ post.title }}</li>
+</ul>
+```
+
+
+##### Implementação 2: Dependencia do state
+Com esta implementação, o state e por sua vez a view, não serão entregues até que o ```$resource``` tenha entregue a resposta da requisição.
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .config(stateConfig);
+
+    stateConfig.$inject = ['$stateProvider'];
+
+    function stateConfig($stateProvider){
+        $stateProvider.state('app.empresa', {
+            parent : 'app',
+            url : '/empresa',
+            views : {
+                'content@' : {
+                    templateUrl : '/scripts/app/empresa/empresa.html',
+                    controller : 'EmpresaController'
+                }
+            },
+            resolve : {
+                photosList : ['$q', 'PhotosService', function($q, PhotosService){
+                    var deferred = $q.defer();
+
+                    PhotosService.query().$promise.then(fnSuccess, fnError);
+
+                    function fnSuccess(data){
+                        deferred.resolve(data);
+                    }
+
+                    function fnError(){
+
+                    }
+
+                    return deferred.promise;
+                }]
+            }
+        })
+    }
+
+})();
+```
+
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .controller('EmpresaController', EmpresaController);
+
+    EmpresaController.$inject = ['$scope', 'photoslist'];
+
+    function EmpresaController($scope, photoslist){
+        $scope.photos = photoslist;
+    }
+})();
+```
+
+```html
+<h1>Oi seu sou a EMPRESA</h1>
+<ul>
+    <li ng-repeat="photo in photos">{{ photo.title }}</li>
+</ul>
 ```
