@@ -6,11 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Treinamento Front</title>
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
     <!-- endbower -->
     <!-- bower:js -->
-    <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
@@ -21,10 +18,25 @@
     <!-- endinjector -->
     <!-- injector:js -->
     <script src="/assets/js/main.js"></script>
-    <script src="/scripts/app/app.js"></script>
+    <script src="/scripts/app/app.module.js"></script>
+    <script src="/scripts/app/app.state.js"></script>
+    <script src="/scripts/app/contato/contato.controller.js"></script>
+    <script src="/scripts/app/contato/contato.state.js"></script>
+    <script src="/scripts/app/empresa/empresa.controller.js"></script>
+    <script src="/scripts/app/empresa/empresa.state.js"></script>
+    <script src="/scripts/app/home/home.controller.js"></script>
+    <script src="/scripts/app/home/home.state.js"></script>
+    <script src="/scripts/app/outros/outros.controller.js"></script>
+    <script src="/scripts/app/outros/outros.state.js"></script>
     <!-- endinjector -->
 </head>
 <body ng-app="treinamento" ng-strict-di>
-
+    <ul>
+        <li><a ui-sref="app.home">Home</a></li>
+        <li><a ui-sref="app.empresa">Empresa</a></li>
+        <li><a ui-sref="app.contato">Contato</a></li>
+        <li><a ui-sref="app.outros">Outros</a></li>
+    </ul>
+    <div ui-view="content"></div>
 </body>
 </html>

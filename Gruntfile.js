@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     },
     watch : {
       inject : {
-        files :  ['assets/js/*.js', 'assets/css/*.css'],
+        files :  ['assets/js/*.js', 'assets/css/*.css','scripts/**/*.js'],
         tasks : ['injector:task']
       },
       bower : {

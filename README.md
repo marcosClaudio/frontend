@@ -106,3 +106,62 @@ Para incluir dependencias para o projeto
 ```
 bower install jquery --save
 ```
+
+## Angular
+
+Instalando o angular
+
+```
+$ bower install angular --save
+```
+
+Usa-se 'use strict' para forcar o javascript a usar regras mais restritar, negando "gambiarras".
+
+States sao os estados da sua pagina, ou seja, como se fosse uma aba dentro da sua pagina. `E como trocar de pagina
+mas permanecendo na mesma (Single Page Aplication).
+
+
+A seguir algumas configuracoes
+
+
+* Usar um modulo existente
+```
+angular.module('SeuModulo')
+```
+
+* Criar um controller
+
+```
+ .controller('SeuController', SeuController);
+```
+
+
+* Criando um state e injetando dependecia.
+
+```
+      .config(NomeDaConfiguracao); // adicionando uma config ao modulo
+
+    NomeDaConfiguracao.$inject = ['$stateProvider']  // injetando dependencia para o config
+    function NomeDaConfiguracao($stateProvider) { // declarando o metodo da configuracao
+        $stateProvider.state('app', {
+            abstract : true,
+            resolve : {}
+        });
+    }
+
+```
+
+
+* Criando uma view para demonstrar um conteudo desejado de um html com um link absoluto
+  * Primeiro crie uma classe view no index.html
+  ```
+   <div ui-view="NomeDaView"></div>
+  ```
+  * Logo depois no arquivo state, preencha a view.
+```
+views : {
+           'NomeDaView@' : {
+              templateUrl : '/endereco_da_html_da_view/SuaView.html',
+              controller : 'ControllerDaSuaView'
+        }
+```
