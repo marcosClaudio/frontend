@@ -98,12 +98,12 @@ Gerenciador de dependencias de insumos para web.
 * Fontes
 
 Para gerar o bower.json:
-```
+```sh
 bower init
 ```
 
 Para incluir dependencias para o projeto
-```
+```sh
 bower install jquery --save
 ```
 
@@ -111,7 +111,7 @@ bower install jquery --save
 
 Instalando o angular
 
-```
+```sh
 $ bower install angular --save
 ```
 
@@ -125,7 +125,7 @@ A inclusão da biblioteca AngularJS nos nossos estudos está sendo incluída pel
 
 #### Identificando a aplicação no HTML
 Devemos identificar a aplicação no HTML para que nosso módulo saiba onde deverá atuar no contexto do nosso HTML. Para tal implementação, utilizaremos o atributo ```ng-app```:
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 ...
@@ -137,10 +137,8 @@ Devemos identificar a aplicação no HTML para que nosso módulo saiba onde deve
 
 #### Criando módulo da aplicação AngularJS
 Devemos identificar para o AngularJS o módulo de nossa aplicação, no nosso caso: **treinamento**.
-Para a declaração de um módulo AngularJS, precisamos utilizar o método ```angular.module(nome\_do\_modulo, arr\_de\_dependencias)```, assim registramos para uso do resto de nossa aplicação.
-```
-arquivo scripts/app/app.module.js
-
+Para a declaração de um módulo AngularJS, precisamos utilizar o método ```angular.module(nome_do_modulo, arr_de_dependencias)```, assim registramos para uso do resto de nossa aplicação.
+```javascript
 (function(){
     'use strict;'
 
@@ -148,6 +146,9 @@ arquivo scripts/app/app.module.js
 })()
 
 ```
+> Estamos utilizando o 'use strict;' para que o interpretador seja rigoroso e não aceite voltas no código, sendo exigido que todas as declarações sejam explícitas.
+
+
 
 Usa-se 'use strict' para forcar o javascript a usar regras mais restritar, negando "gambiarras".
 
