@@ -115,6 +115,40 @@ Instalando o angular
 $ bower install angular --save
 ```
 
+### Inicializando aplicação AngularJS
+Para inicializar uma aplicação AngularJS na página precisamos seguir os seguites passos:
+* Incluir a biblioteca AngularJS
+* Identificar a aplicação no HTML
+* Criar um módulo da aplicação
+
+A inclusão da biblioteca AngularJS nos nossos estudos está sendo incluída pelo Bower e grunt-wiredep.
+
+#### Identificando a aplicação no HTML
+Devemos identificar a aplicação no HTML para que nosso módulo saiba onde deverá atuar no contexto do nosso HTML. Para tal implementação, utilizaremos o atributo ```ng-app```:
+```
+<!DOCTYPE html>
+<html lang="en">
+...
+<body ng-app="treinamento" ng-strict-di>
+...
+</body>
+</html>
+```
+
+#### Criando módulo da aplicação AngularJS
+Devemos identificar para o AngularJS o módulo de nossa aplicação, no nosso caso: **treinamento**.
+Para a declaração de um módulo AngularJS, precisamos utilizar o método ```angular.module(nome\_do\_modulo, arr\_de\_dependencias)```, assim registramos para uso do resto de nossa aplicação.
+```
+arquivo scripts/app/app.module.js
+
+(function(){
+    'use strict;'
+
+    angular.module('treinamento', []);
+})()
+
+```
+
 Usa-se 'use strict' para forcar o javascript a usar regras mais restritar, negando "gambiarras".
 
 States sao os estados da sua pagina, ou seja, como se fosse uma aba dentro da sua pagina. `E como trocar de pagina
