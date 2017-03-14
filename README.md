@@ -108,6 +108,7 @@ bower install jquery --save
 ```
 
 ## Angular
+AngularJS é um framework desenvolvido pelo Google para tratar o frontend como uma aplicação. Nela implementamos o conceito de SPA (Single Page Aplication), onde não há troca de páginas síncronas.
 
 Instalando o angular
 
@@ -115,12 +116,14 @@ Instalando o angular
 $ bower install angular --save
 ```
 
-### Inicializando aplicação AngularJS
+### Inicializando e utilizando a aplicação AngularJS
 Para inicializar uma aplicação AngularJS na página precisamos seguir os seguites passos:
 * Incluir a biblioteca AngularJS
 * Identificar a aplicação no HTML
 * Criar um módulo da aplicação
+* Utilizar o módulo da aplicação
 
+#### Incluindo a biblioteca
 A inclusão da biblioteca AngularJS nos nossos estudos está sendo incluída pelo Bower e grunt-wiredep.
 
 #### Identificando a aplicação no HTML
@@ -142,61 +145,67 @@ Para a declaração de um módulo AngularJS, precisamos utilizar o método ```an
 (function(){
     'use strict;'
 
+    // declarando o módulo treinamento
     angular.module('treinamento', []);
 })()
 
 ```
 > Estamos utilizando o 'use strict;' para que o interpretador seja rigoroso e não aceite voltas no código, sendo exigido que todas as declarações sejam explícitas.
 
+#### Utilizando o módulo criado.
+Para utilizar o módulo AngularJS que criamos, não podemos mais utilizar o segundo parâmetro do método ```angular.module()```, que seria o método declarativo de módulo.
+```js
+(function(){
+    'use strict;'
 
+    // utilizando o módulo treinamento para a criação de um controller
+    angular.module('treinamento')
+        .controller('MyCtrl', MyCtrl);
+    
 
-Usa-se 'use strict' para forcar o javascript a usar regras mais restritar, negando "gambiarras".
+    MyCtrl.$inject = ['$scope'];
 
-States sao os estados da sua pagina, ou seja, como se fosse uma aba dentro da sua pagina. `E como trocar de pagina
-mas permanecendo na mesma (Single Page Aplication).
-
-
-A seguir algumas configuracoes
-
-
-* Usar um modulo existente
-```
-angular.module('SeuModulo')
-```
-
-* Criar um controller
-
-```
- .controller('SeuController', SeuController);
+    function MyCtrl($scope){
+        /* ... código do controller ... */
+    }
+})()
 ```
 
+### ui-router
+Ui-router será utilizado para a criação de rotas para a aplicação. 
+Estas rotas, internamente são tratadas como ```states```, são responsáveis pela troca de conteúdo/estado da página apresentado ao usuário.
 
-* Criando um state e injetando dependecia.
-
+Para a instalação do ui-router na aplicação via bower:
+```sh
+$ bower install angular-ui-router --save
 ```
-      .config(NomeDaConfiguracao); // adicionando uma config ao modulo
 
-    NomeDaConfiguracao.$inject = ['$stateProvider']  // injetando dependencia para o config
-    function NomeDaConfiguracao($stateProvider) { // declarando o metodo da configuracao
+Para utilizarmos o ui-router em nossa aplicação, precisamos indentificá-lo na declaração de dependências do nosso módulo:
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento', ['ui.router']);
+})();
+```
+
+Vamos adotar um padrão para desenvolvimento onde toda as rotas/states da aplicação terão um pai abstrato, que tem será utilizando a declaração de states ```$stateProvider.state(nome_do_state, options)```, como declarado abaixo:
+```js
+(function(){
+    'use strict';
+
+    angular.module('treinamento')
+        .config(stateConfig);
+
+    stateConfig.$inject = ['$stateProvider'];
+
+    function stateConfig($stateProvider){
         $stateProvider.state('app', {
-            abstract : true,
-            resolve : {}
+            abstract : true
         });
     }
 
-```
+})()
 
-
-* Criando uma view para demonstrar um conteudo desejado de um html com um link absoluto
-  * Primeiro crie uma classe view no index.html
-  ```
-   <div ui-view="NomeDaView"></div>
-  ```
-  * Logo depois no arquivo state, preencha a view.
 ```
-views : {
-           'NomeDaView@' : {
-              templateUrl : '/endereco_da_html_da_view/SuaView.html',
-              controller : 'ControllerDaSuaView'
-        }
-```
+Todos os states são declarados através do *provider* ```$stateProvider```, ele tem a função de indicar ao ui-router que há uma rota a ser respeitada dentro da aplicação.
